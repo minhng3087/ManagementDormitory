@@ -9,16 +9,15 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'email', 'password',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -36,4 +35,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // Lien ket model role
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role');
+    }
+
+    // Lien ket model profile
+
+    public function profile()
+    {
+        return $this->hasOne('App\Models\Profile');
+    }
+
+    public function hasRole($role) 
+    {
+        if($this->roles()->where('name', $role)->first()) {
+            return true;
+        }
+        return false;
+    }
 }

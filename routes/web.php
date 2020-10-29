@@ -21,3 +21,15 @@ Route::get('/changepassword', 'ChangePasswordController@index')->name('changepas
 Route::post('/changepassword', 'ChangePasswordController@store')->name('changepassword');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Admin
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
+    Route::resource('/users', 'UsersController', ['except' => ['show', 'create', 'store', 'delete']]);
+});
+
+// User
+
+Route::namespace('User')->prefix('user')->name('user.')->group(function() {
+    Route::resource('/profile', 'ProfileController');
+});
