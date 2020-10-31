@@ -1,5 +1,5 @@
-@extends('layouts.app')
-
+@extends('welcome')
+@section('title','ChangePassword')
 @section('content')
 <div class="container">
   @if ($errors->any())

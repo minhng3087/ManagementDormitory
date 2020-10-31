@@ -12,8 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home-page');
 });
+
 
 Auth::routes();
 // Change password
@@ -21,3 +22,15 @@ Route::get('/changepassword', 'ChangePasswordController@index')->name('changepas
 Route::post('/changepassword', 'ChangePasswordController@store')->name('changepassword');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Admin
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
+    Route::resource('/users', 'UsersController', ['except' => ['show']]);
+});
+
+// User
+
+Route::namespace('User')->prefix('user')->name('user.')->group(function() {
+    Route::resource('/profile', 'ProfileController', ['except' => ['show', 'create', 'edit', 'create', 'destroy']]);
+});
