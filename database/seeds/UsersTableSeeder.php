@@ -23,18 +23,17 @@ class UsersTableSeeder extends Seeder
         $adminRole = Role::where('name', 'admin')->first();
         $userRole = Role::where('name', 'user')->first();
 
+        $user = User::create([
+            'email' => 'user@gmail.com',
+            'password' => Hash::make('123456789'),
+        ]);
         $admin = User::create([
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123456789'),
         ]);
 
-        $user = User::create([
-            'email' => 'user@gmail.com',
-            'password' => Hash::make('123456789'),
-        ]);
-
-        $admin->roles()->attach($adminRole);
         $user->roles()->attach($userRole);
+        $admin->roles()->attach($adminRole);
 
 
     }

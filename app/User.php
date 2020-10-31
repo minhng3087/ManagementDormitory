@@ -43,11 +43,6 @@ class User extends Authenticatable
 
     // Lien ket model profile
 
-    public function profile()
-    {
-        return $this->hasOne('App\Models\Profile');
-    }
-
     public function hasRole($role) 
     {
         if($this->roles()->where('name', $role)->first()) {

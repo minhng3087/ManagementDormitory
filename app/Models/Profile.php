@@ -7,10 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     protected $fillable = [
-        'name', 'mssv', 'phone','class'
+        'name', 'mssv', 'phone','class', 'email'
     ];
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
 }

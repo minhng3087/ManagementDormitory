@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Profile;
 
 class UsersController extends Controller
 {
@@ -21,7 +23,11 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.users.index')->with('users', $users);
+        $profiles = Profile::all(); 
+        return view('admin.users.index')->with([
+            'users' => $users,
+            'profiles' => $profiles
+        ]);
     }
 
     /**
@@ -31,7 +37,10 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        if(Gate::denies('create-users')) {
+            return redirect()->route('admin.users.index');
+        }
+        return view('admin.users.create');
     }
 
     /**
@@ -42,7 +51,21 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'  =>  'required',
+            'mssv'  =>  'required|numeric',
+            'phone' =>  'required|numeric',
+            'class' =>  'required|string',
+        ]);
+        $form_data = [
+            'name'   =>  $request->name,
+            'mssv' => $request->mssv,
+            'phone' => $request->phone,
+            'class' => $request->class,
+            'email' => Auth::user()->email,
+        ];
+        Profile::create($form_data);
+        return redirect()->route('admin.users.index')->with('success', 'Data Added successfully.');
     }
 
     /**
@@ -99,6 +122,9 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        if(Gate::denies('delete-users')) {
+            return redirect()->route('admin.users.index');
+        }
         $user->roles()->detach();
         $user->delete();
 

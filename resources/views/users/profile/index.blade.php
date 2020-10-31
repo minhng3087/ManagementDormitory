@@ -10,16 +10,16 @@
                 <div class="card-body">
                     <table class="table">
                         <tbody>
-                            {{-- @foreach($users as $user)
+                           
                                 <tr>
-                                    <td>{{ $user->profile->name }}</td>
-                                    <td>{{ $user->profile->mssv }}</td>
-                                    <td>{{ $user->profile->phone }}</td>
-                                    <td>{{ $user->profile->class }}</td>
+                                    <td>{{$ttsv->name}}</td>
+                                    <td>{{ $ttsv->mssv }}</td>
+                                    <td>{{ $ttsv->phone }}</td>
+                                    <td>{{ $ttsv->class }}</td>
 
                                 </tr>
                         
-                            @endforeach --}}
+ 
                         </tbody>
                     </table>
                 </div>

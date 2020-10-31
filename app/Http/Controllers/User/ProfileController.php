@@ -5,6 +5,9 @@ use App\Models\Profile;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class ProfileController extends Controller
 {
@@ -19,8 +22,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.profile.index')->with('users', $users);
+        $ttsv = Profile::where('email', Auth::user()->email)->first();
+        return view('users.profile.index', ['ttsv' => $ttsv]);
     }
 
     /**
@@ -30,7 +33,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        return view('users.profile.create');
+        //
     }
 
     /**
@@ -41,20 +44,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'  =>  'required',
-            'mssv'  =>  'required|numeric',
-            'phone' =>  'required|numeric',
-            'class' =>  'required|string',
-        ]);
-        $form_data = [
-            'name'   =>   $request->name,
-            'mssv' => $request->mssv,
-            'phone' => $request->phone,
-            'class' => $request->class,
-        ];
-        Profile::create($form_data);
-        return redirect()->route('user.profile.index')->with('success', 'Data Added successfully.');
+        //
     }
 
     /**

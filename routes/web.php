@@ -25,11 +25,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Admin
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
-    Route::resource('/users', 'UsersController', ['except' => ['show', 'create', 'store', 'delete']]);
+    Route::resource('/users', 'UsersController', ['except' => ['show']]);
 });
 
 // User
 
 Route::namespace('User')->prefix('user')->name('user.')->group(function() {
-    Route::resource('/profile', 'ProfileController');
+    Route::resource('/profile', 'ProfileController', ['except' => ['show', 'create', 'edit', 'create', 'destroy']]);
 });
