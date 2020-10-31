@@ -33,7 +33,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.profile.create');
     }
 
     /**
@@ -44,7 +44,20 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'mssv'  =>  'required|numeric',
+            'phone' =>  'required|numeric',
+            'class' =>  'required|string',
+        ]);
+        $form_data = [
+            'name'  => Auth::user()->name,
+            'mssv' => $request->mssv,
+            'phone' => $request->phone,
+            'class' => $request->class,
+            'email' => Auth::user()->email,
+        ];
+        Profile::create($form_data);
+        return redirect()->route('user.profile.index')->with('success', 'Data Added successfully.');
     }
 
     /**
@@ -64,9 +77,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Profile $profile)
     {
-        // 
+        return view('users.profile.edit',compact('profile'));
     }
 
     /**
@@ -76,19 +89,15 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Profile $profile)
     {
-        //
+        $profile->mssv = $request->mssv;
+        $profile->phone = $request->phone;
+        $profile->class = $request->class;
+        $profile->save() ?  
+            $request->session()->flash('success', 'User updated successfully') : 
+            $request->session()->flash('error', 'User updated failed');
+        return redirect()->route('user.profile.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
