@@ -23,10 +23,8 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
-        $profiles = Profile::all();
-        return view('admin.users.index')->with([
+        return view('pages.admin.index')->with([
             'users' => $users,
-            'profiles' => $profiles
         ]);
     }
 
@@ -58,10 +56,9 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($mssv)
+    public function show()
     {
-        $detail = Profile::where('mssv', $mssv)->first();
-        return view('admin.users.show')->with(['detail' => $detail]);
+    
     }
 
     /**
@@ -74,9 +71,9 @@ class UsersController extends Controller
     {
         $roles = Role::all();
         if(Gate::denies('edit-users')) {
-            return redirect()->route('admin.users.index');
+            return redirect()->route('pages.admin.index');
         }
-        return view('admin.users.edit')->with([
+        return view('pages.admin.edit')->with([
             'user' => $user,
             'roles' => $roles,
         ]);
@@ -96,7 +93,7 @@ class UsersController extends Controller
         $user->save() ?  
             $request->session()->flash('success', 'User updated successfully') : 
             $request->session()->flash('error', 'User updated failed');
-        return redirect()->route('admin.users.index');
+        return redirect()->route('pages.admin.index');
     }
 
     /**
@@ -108,11 +105,11 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         if(Gate::denies('delete-users')) {
-            return redirect()->route('admin.users.index');
+            return redirect()->route('pages.admin.index');
         }
         $user->roles()->detach();
         $user->delete();
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('pages.admin.index');
     }
 }

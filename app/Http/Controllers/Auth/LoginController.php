@@ -40,7 +40,7 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        $this->redirectTo = (Auth::user()->hasRole('admin')) ? route('admin.users.index') : route('user.profile.index');
+        $this->redirectTo = (Auth::user()->hasRole('admin')) ? route('dashboard') : route('user.profile.index');
         return $this->redirectTo;
     }
 }

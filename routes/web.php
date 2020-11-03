@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('home-page');
+    return view('welcome');
 });
 
 
@@ -26,14 +26,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Admin
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
-    Route::resource('/users', 'UsersController');
+    Route::resource('/', 'UsersController');
 });
+
+Route::get('/admin/info-users','Admin\ShowInfoController@showinfo')->name('admin.showinfo');
 
 // User
 
 Route::namespace('User')->prefix('user')->name('user.')->group(function() {
     Route::resource('/profile', 'ProfileController');
 });
+
 // Route::get('user/profile', 'User\ProfileController@index')->name('user.profile.index');
 // Route::get('user/profile/create', 'User\ProfileController@create')->name('user.profile.create');
 // Route::post('user/profile/store', 'User\ProfileController@store')->name('user.profile.store');
