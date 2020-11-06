@@ -16,10 +16,11 @@
                                     <th>ID</th>
                                     <th>{{ __('Tên') }}</th>
                                     <th>{{ __('MSSV') }}</th>
-                                    <th>{{ __('Khóa') }}</th>
-                                    <th>{{ __('Khoa') }}</th>
+                                    <th>{{ __('Giới tính') }}</th>
+                                    <th>{{ __('Email') }}</th>
                                     <th>{{ __('Số điện thoại') }}</th>
-                                    <th>{{ __('Lớp') }}</th>
+                                    <th>{{ __('Khóa') }}</th>
+                                    <th>{{ __('Viện') }}</th>
                                     <th>{{ __('Quê quán') }}</th>
 
                                 </thead>
@@ -27,10 +28,14 @@
                                     @foreach($profiles as $profile)
                                         <tr>
                                             <td>{{ $profile->id }}</td>
-                                            <td>{{ $profile->name }}</td>
-                                            <td>{{ $profile->phone }}</td>
+                                            <td>{{ $profile->ten }}</td>
                                             <td>{{ $profile->mssv }}</td>
-                                            <td>{{ $profile->class }}</td>
+                                            <td>{{ $profile->gt }}</td>
+                                            <td>{{ $profile->email }}</td>
+                                            <td>{{ $profile->sdt }}</td>
+                                            <td>{{ $profile->khoa}}</td>
+                                            <td>{{ $profile->vien}}</td>
+                                            <td>{{ $profile->qq}}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

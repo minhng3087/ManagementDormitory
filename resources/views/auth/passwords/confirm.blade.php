@@ -1,5 +1,4 @@
-@extends('welcome')
-@section('title', 'ConfirmsPassword')
+@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'title' => __('Confirm Password')])
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

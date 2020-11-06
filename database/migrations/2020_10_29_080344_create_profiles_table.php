@@ -18,8 +18,12 @@ class CreateProfilesTable extends Migration
             $table->string('email');
             $table->string('name');
             $table->integer('mssv')->unique();
-            $table->integer('phone');
-            $table->string('class');
+            $table->string('image')->nullable();
+            $table->string('qq');
+            $table->integer('sdt');
+            $table->bigInteger('vien_id')->unsigned();
+            $table->bigInteger('gt_id')->unsigned();
+            $table->bigInteger('khoa_id')->unsigned();
             $table->timestamps();
         });
     }

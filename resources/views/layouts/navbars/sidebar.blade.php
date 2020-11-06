@@ -12,34 +12,45 @@
   <div class="sidebar-wrapper">
     <ul class="nav">
       <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href={{ route('dashboard') }}>
           <i class="material-icons">dashboard</i>
             <p>{{ __('Dashboard') }}</p>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
-          <i><img style="width:25px" src="{{ URL::to('/material/img/laravel.svg') }}"></i>
-          <p>{{ __('Sinh viên') }}
-            <b class="caret"></b>
-          </p>
-        </a>
-        <div class="collapse show" id="laravelExample">
-          <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('admin.showinfo') }}">
-                <span class="sidebar-mini"> UP </span>
-                <span class="sidebar-normal">{{ __('Quản lý thông tin') }} </span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('admin.index') }}">
-                <span class="sidebar-mini"> UM </span>
-                <span class="sidebar-normal"> {{ __('Quản lý tài khoản ') }} </span>
-              </a>
-            </li>
-          </ul>
-        </div>
+
+      @if(Auth::user()->hasRole('admin'))
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
+            <i><img style="width:25px" src="{{ URL::to('/material/img/laravel.svg') }}"></i>
+            <p>{{ __('Sinh viên') }}
+              <b class="caret"></b>
+            </p>
+          </a>
+          <div class="collapse show" id="laravelExample">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.showinfo') }}">
+                  <span class="sidebar-mini"> UP </span>
+                  <span class="sidebar-normal">{{ __('Quản lý thông tin') }} </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.index') }}">
+                  <span class="sidebar-mini"> UM </span>
+                  <span class="sidebar-normal"> {{ __('Quản lý tài khoản ') }} </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      @else
+        <li class="nav-item">
+          <a class="nav-link" href={{ route('user.profile.index') }}>
+            <i class="material-icons">perm_identity</i>
+              <p>{{ __('Thông tin cá nhân') }}</p>
+          </a>
+        </li>
+      @endif
       <li class="nav-item">
         <a class="nav-link" href="{{ route('changepassword') }}">
           <i class="material-icons">mode_edit</i>

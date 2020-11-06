@@ -1,5 +1,5 @@
-@extends('welcome')
-@section('title','Register')
+@extends('layouts.app','title' => __('Register')])
+
 
 @section('content')
 <div class="container">

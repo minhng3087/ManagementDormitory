@@ -42,7 +42,7 @@ class User extends Authenticatable
     }
 
     // Lien ket model profile
-
+    
     public function hasRole($role) 
     {
         if($this->roles()->where('name', $role)->first()) {

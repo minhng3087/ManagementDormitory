@@ -1,5 +1,4 @@
-@extends('welcome')
-@section('title','ChangePassword')
+@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'title' => __('Change Password')])
 @section('content')
 <div class="content">
 
