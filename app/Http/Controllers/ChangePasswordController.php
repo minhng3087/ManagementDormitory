@@ -33,8 +33,6 @@ class ChangePasswordController extends Controller
           if(strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
             return back()->with('error', 'Mật khẩu phải trùng nhau');
           }
-          //Validate the Password.
-      
           // Save the New Password.
           $user = Auth::user();
           $user->password = bcrypt($request->get('new_password'));

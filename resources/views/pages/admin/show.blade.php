@@ -27,14 +27,26 @@
                                 <tbody>
                                     @foreach($profiles as $profile)
                                         <tr>
-                                            <td>{{ $profile->id }}</td>
-                                            <td>{{ $profile->ten }}</td>
+                                            <td>{{ $profile->id - 1}}</td>
+                                            <td>{{ $profile->name }}</td>
                                             <td>{{ $profile->mssv }}</td>
-                                            <td>{{ $profile->gt }}</td>
+                                            @foreach($gts as $gt)
+                                                @if ($profile->gt_id === $gt->id)
+                                                <td>{{$gt->name}}</td>
+                                                @endif
+                                            @endforeach
                                             <td>{{ $profile->email }}</td>
-                                            <td>{{ $profile->sdt }}</td>
-                                            <td>{{ $profile->khoa}}</td>
-                                            <td>{{ $profile->vien}}</td>
+                                            <td>{{ 0 . $profile->sdt }}</td>
+                                            @foreach($viens as $vien)
+                                                @if ($profile->vien_id === $vien->id)
+                                                <td>{{$vien->name}}</td>
+                                                @endif
+                                            @endforeach
+                                            @foreach($khoas as $khoa)
+                                                @if ($profile->khoa_id === $khoa->id)
+                                                <td>{{$khoa->name}}</td>
+                                                @endif
+                                            @endforeach
                                             <td>{{ $profile->qq}}</td>
                                         </tr>
                                     @endforeach

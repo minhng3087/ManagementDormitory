@@ -1,5 +1,4 @@
-@extends('layouts.app','title' => __('Register')])
-
+@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'title' => __('Register')])
 
 @section('content')
 <div class="container">
@@ -9,6 +8,7 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <div>{{ __('Register') }}</div>
+                        <div><a class="btn btn-primary" role="button" href="{{ route('login') }}">{{ __('Login') }}</a></div>
                     </div>
                 </div>
 

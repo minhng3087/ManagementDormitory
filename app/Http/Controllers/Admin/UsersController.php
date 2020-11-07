@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -22,9 +23,11 @@ class UsersController extends Controller
      */
     public function index()
     {
+        $profiles = Profile::all();
         $users = User::all();
         return view('pages.admin.index')->with([
             'users' => $users,
+            'profiles' => $profiles
         ]);
     }
 
@@ -56,9 +59,18 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($mssv)
     {
-    
+        $vien = DB::table('profiles')->join('viens', 'viens.id', '=', 'profiles.vien_id');
+        $khoa = DB::table('profiles')->join('khoas', 'khoas.id', '=', 'profiles.khoa_id');
+        $gt = DB::table('profiles')->join('gts', 'gts.id', '=', 'profiles.gt_id');
+        $ttsv = Profile::where('mssv', $mssv)->first();
+        return view('pages.admin.detail')->with([
+            'ttsv' => $ttsv,
+            'vien' => $vien->value('viens.name'),
+            'khoa' => $khoa->value('khoas.name'),
+            'gt' => $gt->value('gts.name'),
+        ]);
     }
 
     /**
@@ -70,9 +82,9 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all();
-        if(Gate::denies('edit-users')) {
-            return redirect()->route('pages.admin.index');
-        }
+        // if(Gate::denies('edit-users')) {
+        //     return redirect()->route('pages.admin.index');
+        // }
         return view('pages.admin.edit')->with([
             'user' => $user,
             'roles' => $roles,

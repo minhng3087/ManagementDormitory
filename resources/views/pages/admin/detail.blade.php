@@ -4,9 +4,6 @@
 <div class="content">
 
     <div class="container">
-        @if ($ttsv === null)
-            <script>window.location = "/user/profile/create";</script>
-        @else
             <div class="main-body">
                   <div class="row gutters-sm">
                     <div class="col-md-4 mb-3">
@@ -93,11 +90,6 @@
                             </div>
                           </div>
                           <hr>
-                          <div class="row float-right">
-                              <div class="col-sm-12">
-                                  <a href="{{route('user.profile.edit', $ttsv)}}" class="btn btn-primary">{{ __('Chỉnh sửa')}}</a>
-                              </div>
-                          </div>
                         </div>
                       </div>
                         </div>
@@ -106,7 +98,6 @@
                   </div>
                 </div>
             </div>
-        @endif
         
     </div>
 </div>

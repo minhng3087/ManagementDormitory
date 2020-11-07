@@ -22,9 +22,14 @@
                                     @foreach($users as $user)
                                         <tr>
                                             @if ( $user->roles()->get()->pluck('name')->toArray() !== ["admin"])
-                                            <td>{{ $user->id }}</td>
+                                            <td>{{ $user->id - 1}}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->name }}</td>
+                                            @foreach($profiles as $profile)
+                                                @if($profile->email === $user->email)
+                                                <td><a href="{{ route('admin.show', $profile->mssv)}}" class="btn btn-primary">Show</a></td>
+                                                @endif
+                                            @endforeach
                                             <td>
                                                 <form action="{{ route('admin.destroy', $user->id) }}" method="POST">
                                                     @csrf

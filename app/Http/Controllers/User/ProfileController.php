@@ -111,7 +111,15 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        return view('users.profile.edit',compact('profile'));
+        $viens = Vien::all();
+        $khoas = Khoa::all();
+        $gts = Gt::all();
+        return view('users.profile.edit')->with([
+            'profile' => $profile,
+            'viens' => $viens,
+            'khoas' => $khoas,
+            'gts' => $gts
+        ]);
     }
 
     /**
@@ -123,10 +131,45 @@ class ProfileController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
-        $profile->mssv = $request->mssv;
-        $profile->phone = $request->phone;
-        $profile->class = $request->class;
-        $profile->save() ?  
+        $image_name = $request->hidden_image;
+        $image = $request->file('image');
+        if($image != '')
+        {
+            $request->validate([
+                'mssv'  =>  'required|numeric',
+                'sdt' =>  'required|numeric',
+                'qq' =>  'required|string',
+                'image' =>  'required|image|max:2048',
+                'khoa_id' => 'required',
+                'gt_id' => 'required',
+                'vien_id' => 'required',
+            ]);
+
+            $image_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads'), $image_name);
+        }
+        else
+        {
+            $request->validate([
+                'mssv'  =>  'required|numeric',
+                'sdt' =>  'required|numeric',
+                'qq' =>  'required|string',
+                'khoa_id' => 'required',
+                'gt_id' => 'required',
+                'vien_id' => 'required',
+            ]);
+        }
+
+        $form_data = [
+            'mssv' => $request->mssv,
+            'sdt' => $request->sdt,
+            'khoa_id' => $request->khoa_id,
+            'gt_id' => $request->gt_id,
+            'vien_id' => $request->vien_id,
+            'image' => $image_name,
+            'qq' => $request->qq,
+        ];
+        Profile::whereId($profile->id)->update($form_data) ?  
             $request->session()->flash('success', 'User updated successfully') : 
             $request->session()->flash('error', 'User updated failed');
         return redirect()->route('user.profile.index');
