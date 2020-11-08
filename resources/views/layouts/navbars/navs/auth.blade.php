@@ -21,11 +21,10 @@
         <li class="nav-item dropdown">
           <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">person</i>
-            <p class="d-lg-none d-md-block">
-              {{ __('Account') }}
-            </p>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+            <a href="{{route('user.profile.index')}}" class="dropdown-item">{{ Auth::user()->name }}</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Log out') }}</a>
           </div>
         </li>

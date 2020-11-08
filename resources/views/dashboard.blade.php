@@ -2,10 +2,12 @@
 
 @section('content')
   <div class="content">
-    @if(Auth::user()->hasRole('admin'))
-    <p>Bạn đang đăng nhập với tư cách admin</p>
-    @else
-    <p>Bạn đang đăng nhập với tư cách user</p>
+    <div class="container">
+      @if(Auth::user()->hasRole('admin'))
+      <h3 class="text-center">Bạn đang đăng nhập với tư cách admin</h3>
+      @else
+      <h3 class="text-center">Bạn đang đăng nhập với tư cách user</h3>
+    </div>
     @endif
   </div>
 @endsection

@@ -65,8 +65,8 @@ class ProfileController extends Controller
     {
        
         $request->validate([
-            'mssv'  =>  'required|numeric',
-            'sdt' =>  'required|numeric',
+            'mssv'  =>  'required|numeric|min:8',
+            'sdt' =>  'required|numeric|min:10',
             'qq' =>  'required|string',
             'image' =>  'required|image|max:2048',
             'khoa_id' => 'required',
@@ -89,7 +89,7 @@ class ProfileController extends Controller
             'email' => Auth::user()->email,
         ];
         Profile::create($form_data);
-        return redirect()->route('user.profile.index')->with('success', 'Data Added successfully.');
+        return redirect()->route('user.profile.index')->with('success', 'Thêm dữ liệu thành công');
     }
 
     /**
@@ -135,9 +135,10 @@ class ProfileController extends Controller
         $image = $request->file('image');
         if($image != '')
         {
+            unlink(public_path('uploads') . '/' . $image_name);
             $request->validate([
-                'mssv'  =>  'required|numeric',
-                'sdt' =>  'required|numeric',
+                'mssv'  =>  'required|numeric|min:8',
+                'sdt' =>  'required|numeric|min:10',
                 'qq' =>  'required|string',
                 'image' =>  'required|image|max:2048',
                 'khoa_id' => 'required',
@@ -151,8 +152,8 @@ class ProfileController extends Controller
         else
         {
             $request->validate([
-                'mssv'  =>  'required|numeric',
-                'sdt' =>  'required|numeric',
+                'mssv'  =>  'required|numeric|min:8',
+                'sdt' =>  'required|numeric|min:10',
                 'qq' =>  'required|string',
                 'khoa_id' => 'required',
                 'gt_id' => 'required',
@@ -170,8 +171,8 @@ class ProfileController extends Controller
             'qq' => $request->qq,
         ];
         Profile::whereId($profile->id)->update($form_data) ?  
-            $request->session()->flash('success', 'User updated successfully') : 
-            $request->session()->flash('error', 'User updated failed');
+            $request->session()->flash('success', 'Cập nhật thành công') : 
+            $request->session()->flash('error', 'Cập nhật thất bại');
         return redirect()->route('user.profile.index');
     }
 

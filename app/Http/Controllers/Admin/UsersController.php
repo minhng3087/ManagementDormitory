@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
 use Illuminate\Support\Facades\DB;
 
+
 class UsersController extends Controller
 {
     public function __construct()
@@ -82,9 +83,6 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all();
-        // if(Gate::denies('edit-users')) {
-        //     return redirect()->route('pages.admin.index');
-        // }
         return view('pages.admin.edit')->with([
             'user' => $user,
             'roles' => $roles,
@@ -114,14 +112,16 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
-        if(Gate::denies('delete-users')) {
-            return redirect()->route('pages.admin.index');
-        }
+        $old_name = $user->name;
+        $ttsv = Profile::where('id', $user->id - 1)->first();
+        $ttsv->delete();
         $user->roles()->detach();
-        $user->delete();
+        $user->delete() ?  
+            $request->session()->flash('success',"Xóa $old_name thành công") : 
+            $request->session()->flash('error', "Xóa $old_name thất bại");
 
-        return redirect()->route('pages.admin.index');
+        return redirect()->route('admin.users.index');
     }
 }

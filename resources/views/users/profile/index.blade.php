@@ -2,20 +2,16 @@
 
 @section('content')
 <div class="content">
-
     <div class="container">
         @if ($ttsv === null)
             <script>window.location = "/user/profile/create";</script>
         @else
             <div class="main-body">
+              @include('partials.alerts')
                   <div class="row gutters-sm">
                     <div class="col-md-4 mb-3">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="d-flex flex-column align-items-center text-center">
-                            <img src="{{ URL::to('/') }}/uploads/{{ $ttsv->image }}" alt="Avatar" class="rounded-circle" width="150">
-                          </div>
-                        </div>
+                      <div style="margin-top:30px;">
+                          <img src="{{ URL::to('/') }}/uploads/{{ $ttsv->image }}" alt="Avatar" class="rounded mx-auto d-block img-thumbnail" width="200">
                       </div>
                     </div>
                     <div class="col-md-8">

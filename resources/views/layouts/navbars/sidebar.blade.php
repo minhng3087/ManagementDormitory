@@ -5,9 +5,7 @@
       Tip 2: you can also add an image using data-image tag
   -->
   <div class="logo">
-    <a href="https://creative-tim.com/" class="simple-text logo-normal">
-      {{ __('Creative Tim') }}
-    </a>
+    <a href="{{route('dashboard')}}"><img style="width:100px;display: block; margin-left: auto; margin-right: auto;" src="{{ URL::to('/material/img/logo-dai-hoc-bach-khoa-ha-noi.png') }}" alt="logo"></a>
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
@@ -35,7 +33,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.index') }}">
+                <a class="nav-link" href="{{ route('admin.users.index') }}">
                   <span class="sidebar-mini"> UM </span>
                   <span class="sidebar-normal"> {{ __('Quản lý tài khoản ') }} </span>
                 </a>

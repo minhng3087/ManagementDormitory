@@ -30,10 +30,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Admin
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
-    Route::resource('/', 'UsersController');
+    Route::get('/info-users','ShowInfoController@showinfo')->name('showinfo');
+    Route::resource('/users', 'UsersController');
+
 });
 
-Route::get('/admin/info-users','Admin\ShowInfoController@showinfo')->name('admin.showinfo');
+// Route::get('/admin/info-users','Admin\ShowInfoController@showinfo')->name('admin.showinfo');
 
 // User
 
