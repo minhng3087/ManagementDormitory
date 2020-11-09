@@ -25,6 +25,9 @@ class ShowInfoController extends Controller
      */
     public function showinfo()
     {
+        if (Gate::denies('admin')) {
+            return back();
+        }
         $profiles = Profile::all();
         $viens = Vien::all();
         $khoas = Khoa::all();

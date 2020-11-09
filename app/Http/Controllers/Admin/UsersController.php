@@ -24,6 +24,9 @@ class UsersController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('admin')) {
+            return back();
+        }
         $profiles = Profile::all();
         $users = User::all();
         return view('pages.admin.index')->with([
@@ -82,6 +85,9 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        if (Gate::denies('admin')) {
+            return back();
+        }
         $roles = Role::all();
         return view('pages.admin.edit')->with([
             'user' => $user,
@@ -99,6 +105,9 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        if (Gate::denies('admin')) {
+            return back();
+        }
         $ttsv = Profile::where('id', $user->id - 1)->first();
         $ttsv->name = $request->name;
         $ttsv->email = $request->email;
@@ -119,6 +128,9 @@ class UsersController extends Controller
      */
     public function destroy(Request $request, User $user)
     {
+        if (Gate::denies('admin')) {
+            return back();
+        }
         $old_name = $user->name;
         $ttsv = Profile::where('id', $user->id - 1)->first();
         $ttsv->delete();
