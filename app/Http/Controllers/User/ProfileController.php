@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ValidateProfile;
 
 
 
@@ -61,18 +62,8 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValidateProfile $request)
     {
-       
-        $request->validate([
-            'mssv'  =>  'required|numeric|min:8',
-            'sdt' =>  'required|numeric|min:10',
-            'qq' =>  'required|string',
-            'image' =>  'required|image|max:2048',
-            'khoa_id' => 'required',
-            'gt_id' => 'required',
-            'vien_id' => 'required',
-        ]);
         $image = $request->file('image');
 
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
@@ -152,8 +143,8 @@ class ProfileController extends Controller
         else
         {
             $request->validate([
-                'mssv'  =>  'required|numeric|min:8',
-                'sdt' =>  'required|numeric|min:10',
+                'mssv'  =>  'required|min:8',
+                'sdt' =>  'required|min:10',
                 'qq' =>  'required|string',
                 'khoa_id' => 'required',
                 'gt_id' => 'required',

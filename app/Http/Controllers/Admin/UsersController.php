@@ -99,11 +99,16 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $ttsv = Profile::where('id', $user->id - 1)->first();
+        $ttsv->name = $request->name;
+        $ttsv->email = $request->email;
+        $user->name = $request->name;
         $user->email = $request->email;
+        $ttsv->save();
         $user->save() ?  
             $request->session()->flash('success', 'User updated successfully') : 
             $request->session()->flash('error', 'User updated failed');
-        return redirect()->route('pages.admin.index');
+        return redirect()->route('admin.users.index');
     }
 
     /**

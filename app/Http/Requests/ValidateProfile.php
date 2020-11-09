@@ -24,8 +24,8 @@ class ValidateProfile extends FormRequest
     public function rules()
     {
         return [
-            'mssv'  =>  'required|numeric',
-            'sdt' =>  'required|numeric',
+            'mssv'  =>  'required|numeric|min:8',
+            'sdt' =>  'required|numeric|min:10',
             'qq' =>  'required|string',
             'image' =>  'required|image|max:2048',
             'khoa_id' => 'required',

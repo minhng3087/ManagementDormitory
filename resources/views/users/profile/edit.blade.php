@@ -5,7 +5,6 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-
                 <form method="POST" action="{{ route('user.profile.update', $profile) }}" enctype="multipart/form-data">
                     <!-- Grid row -->
                     @csrf
@@ -15,7 +14,7 @@
                         <div class="col-md-6">
                             <!-- Material input -->
                             <div class="md-form form-group">
-                            <input type="number" class="form-control" id="sdt" name="sdt" value={{ $profile->sdt }}>
+                            <input type="number" class="form-control  @error('sdt') is-invalid @enderror" id="sdt" name="sdt" value={{ $profile->sdt }}>
                             @error('sdt')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -30,7 +29,7 @@
                         <div class="col-md-6">
                             <!-- Material input -->
                             <div class="md-form form-group">
-                            <input type="number" class="form-control" id="mssv" name="mssv" value="{{$profile->mssv}}">
+                            <input type="number" class="form-control @error('mssv') is-invalid @enderror" id="mssv" name="mssv" value="{{$profile->mssv}}">
                             @error('mssv')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -49,7 +48,7 @@
                         <div class="col-md-12">
                             <!-- Material input -->
                             <div class="md-form form-group">
-                            <input type="text" class="form-control" id="qq" name="qq" value="{{$profile->qq}}">
+                            <input type="text" class="form-control @error('qq') is-invalid @enderror" id="qq" name="qq" value="{{$profile->qq}}">
                             @error('qq')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -65,12 +64,17 @@
                         <div class="col-md-12">
                             <!-- Material input -->
                             <div class="md-form form-group">
-                                <select class="custom-select custom-select-md" name="vien_id">
+                                <select class="custom-select custom-select-md @error('vien_id') is-invalid @enderror" name="vien_id">
                                     <option value="" selected>{{ __('Viện') }}</option>
                                     @foreach($viens as $vien)
                                     <option value="{{$vien->id}}" {{$vien->id == $profile->vien_id ? 'selected' : ''}}>{{ $vien->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('vien_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
 
@@ -85,12 +89,17 @@
                         <div class="col-md-5">
                             <!-- Material input -->
                             <div class="md-form form-group">
-                                <select class="custom-select custom-select-md" name="gt_id">
+                                <select class="custom-select custom-select-md @error('gt_id') is-invalid @enderror" name="gt_id">
                                     <option value="" selected>{{ __('Giới tính') }}</option>
                                     @foreach($gts as $gt)
                                     <option value="{{ $gt->id}}" {{$gt->id == $profile->gt_id ? 'selected' : ''}}>{{ $gt->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('gt_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <!-- Grid column -->
@@ -99,12 +108,17 @@
                         <div class="col-md-5">
                             <!-- Material input -->
                             <div class="md-form form-group">
-                                <select class="custom-select custom-select-md" name="khoa_id">
+                                <select class="custom-select custom-select-md @error('khoa_id') is-invalid @enderror" name="khoa_id">
                                     <option value="" selected>Khóa</option>
                                     @foreach($khoas as $khoa)
                                     <option value="{{ $khoa->id}}" {{$khoa->id == $profile->khoa_id ? 'selected' : ''}}>{{ $khoa->name }}</option>
                                     @endforeach
                                   </select>
+                                @error('khoa_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <!-- Grid column -->
