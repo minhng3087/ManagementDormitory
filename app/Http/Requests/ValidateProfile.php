@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
 class ValidateProfile extends FormRequest
 {
     /**
@@ -24,7 +23,7 @@ class ValidateProfile extends FormRequest
     public function rules()
     {
         return [
-            'mssv'  =>  'required|numeric|min:8',
+            'mssv'  =>  'required|numeric|min:8|unique:profiles',
             'sdt' =>  'required|numeric|min:10',
             'qq' =>  'required|string',
             'image' =>  'required|image|max:2048',

@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
@@ -32,7 +32,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
     Route::get('/info-users','ShowInfoController@showinfo')->name('showinfo');
     Route::resource('/users', 'UsersController');
-
+    
 });
 
 // Route::get('/admin/info-users','Admin\ShowInfoController@showinfo')->name('admin.showinfo');
@@ -41,7 +41,29 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
 
 Route::namespace('User')->prefix('user')->name('user.')->group(function() {
     Route::resource('/profile', 'ProfileController');
+
+
 });
+#---------------------- Student --------------------------
+Route::get('area_info', 'StudentController@index')->name('area_info');
+Route::get('room_info/{id}', 'StudentController@viewRoom')->name('room_info');
+Route::get('regist_room/{id}', 'StudentController@registRoom')->name('regist_room');
+Route::get('student_xemdk', 'StudentController@student_xemdk')->name('student_xemdk');
+Route::get('view_managers', 'StudentController@view_managers')->name('view_managers');
+
+#----------------------- Manager -------------------------------------
+Route::get('manager_duyetdk','ManagerController@index')->name('manager_duyetdk');
+Route::get('get_manager_duyetdk/{mssv}','ManagerController@get_manager_duyetdk')->name('get_manager_duyetdk');
+Route::get('get_manager_huydk/{mssv}','ManagerController@get_manager_huydk')->name('get_manager_huydk');
+Route::get('get_manager_ttsv/{mssv}','ManagerController@get_manager_ttsv')->name('get_manager_ttsv');
+#----------------------- Xem thông tin phòng -------------------------
+Route::get('manager_qlphong', 'ManagerController@manager_qlphong')->name('manager_qlphong');
+Route::get('manager_ttphong/{id}', 'ManagerController@manager_ttphong')->name('manager_ttphong');
+Route::get('manager_delete_sv/{mssv}', 'ManagerController@manager_delete_sv')->name('manager_delete_sv');
+
+
+
+
 
 // Route::get('user/profile', 'User\ProfileController@index')->name('user.profile.index');
 // Route::get('user/profile/create', 'User\ProfileController@create')->name('user.profile.create');

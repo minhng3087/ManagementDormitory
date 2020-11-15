@@ -19,8 +19,8 @@
                                     <th>{{ __('Giới tính') }}</th>
                                     <th>{{ __('Email') }}</th>
                                     <th>{{ __('Số điện thoại') }}</th>
-                                    <th>{{ __('Khóa') }}</th>
                                     <th>{{ __('Viện') }}</th>
+                                    <th>{{ __('Khóa') }}</th>
                                     <th>{{ __('Quê quán') }}</th>
 
                                 </thead>

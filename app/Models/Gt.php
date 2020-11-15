@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gt extends Model
 {
-    
+   protected $fillable = [
+       'name' 
+   ];
 }
 

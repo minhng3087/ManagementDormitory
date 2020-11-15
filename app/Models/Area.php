@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Khoa extends Model
+class Area extends Model
 {
     protected $fillable = [
-        'name'
+        'area_name',
+        'area_cost'
     ];
 }

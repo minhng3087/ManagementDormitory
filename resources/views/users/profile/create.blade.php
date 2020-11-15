@@ -3,6 +3,9 @@
 
 <div class="content">
     <div class="container">
+        @if(Session::has('flag'))
+            <div class="error" style="color: red;"><p>{{Session::get('message')}}</p></div>
+        @endif
         <div class="card">
             <div class="card-body">
 

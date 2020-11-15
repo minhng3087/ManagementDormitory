@@ -32,10 +32,5 @@ class SelectsTableSeeder extends Seeder
         Vien::create(['name' => 'Điện']);
         Vien::create(['name' => 'Vật lý kĩ thuật']);
 
-        
-
-
-
-
     }
 }
