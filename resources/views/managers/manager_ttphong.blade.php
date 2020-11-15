@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+    @if(Auth::user()->hasRole('admin'))
 	<div class="container">
         <h3 style="">
             <i class="fa fa-arrow-circle-o-right"></i>
@@ -38,4 +39,5 @@
         </table>
         @endif
     </div>
+    @endif
 @endsection

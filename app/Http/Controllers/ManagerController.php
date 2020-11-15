@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Gt;
 use App\Models\Room;
 use App\Models\Area;
 use App\Models\Profile;
@@ -99,5 +100,22 @@ class ManagerController extends Controller
            ['mssv',$mssv] 
         ])->update(['status'=>'cancelled']);
         return redirect()->back();
+    }
+    // public function manager_search () {
+    //     $sv_info = DB::table('profiles')->paginate(7);
+    //     return view('managers.manager_search', ['sv_info' => $sv_info]);
+    // }
+    public function manager_search_sv(Request $request) {
+        $gts = Gt::all();
+        $request->validate([
+            'search-sv'=>'required',            
+        ]);
+        $search_content = $request->input('search-sv');
+        $sv_info = Profile::where('mssv', 'LIKE','%'.$search_content."%")
+        ->orWhere('name', 'LIKE','%'.$search_content."%")
+        ->orWhere('qq', 'LIKE','%'.$search_content."%")
+        ->orWhere('email', 'LIKE','%'.$search_content."%")->paginate(7);
+        return view('managers.manager_search_sv', compact('sv_info','gts'));
+        
     }
 }

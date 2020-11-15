@@ -53,6 +53,7 @@
               <p>{{ __('Quản lý phòng ở') }}</p>
           </a>
         </li>
+
       @else
         <li class="nav-item">
           <a class="nav-link" href={{ route('user.profile.index') }}>
@@ -85,10 +86,6 @@
             <p>{{ __('Đổi mật khẩu ') }}</p>
         </a>
       </li>
-      
-      
-      
-      
       
     </ul>
   </div>

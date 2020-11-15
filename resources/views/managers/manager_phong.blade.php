@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+    @if(Auth::user()->hasRole('admin'))
     <div class="container">
         <div class="list_phong">
             <h3 style="">
@@ -38,4 +39,5 @@
             </div>
         </div>
     </div>
+    @endif
 @endsection

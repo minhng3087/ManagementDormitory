@@ -35,7 +35,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
     
 });
 
-// Route::get('/admin/info-users','Admin\ShowInfoController@showinfo')->name('admin.showinfo');
 
 // User
 
@@ -44,6 +43,7 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function() {
 
 
 });
+
 #---------------------- Student --------------------------
 Route::get('area_info', 'StudentController@index')->name('area_info');
 Route::get('room_info/{id}', 'StudentController@viewRoom')->name('room_info');
@@ -51,22 +51,15 @@ Route::get('regist_room/{id}', 'StudentController@registRoom')->name('regist_roo
 Route::get('student_xemdk', 'StudentController@student_xemdk')->name('student_xemdk');
 Route::get('view_managers', 'StudentController@view_managers')->name('view_managers');
 
+
 #----------------------- Manager -------------------------------------
 Route::get('manager_duyetdk','ManagerController@index')->name('manager_duyetdk');
 Route::get('get_manager_duyetdk/{mssv}','ManagerController@get_manager_duyetdk')->name('get_manager_duyetdk');
 Route::get('get_manager_huydk/{mssv}','ManagerController@get_manager_huydk')->name('get_manager_huydk');
 Route::get('get_manager_ttsv/{mssv}','ManagerController@get_manager_ttsv')->name('get_manager_ttsv');
+
 #----------------------- Xem thông tin phòng -------------------------
 Route::get('manager_qlphong', 'ManagerController@manager_qlphong')->name('manager_qlphong');
 Route::get('manager_ttphong/{id}', 'ManagerController@manager_ttphong')->name('manager_ttphong');
 Route::get('manager_delete_sv/{mssv}', 'ManagerController@manager_delete_sv')->name('manager_delete_sv');
-
-
-
-
-
-// Route::get('user/profile', 'User\ProfileController@index')->name('user.profile.index');
-// Route::get('user/profile/create', 'User\ProfileController@create')->name('user.profile.create');
-// Route::post('user/profile/store', 'User\ProfileController@store')->name('user.profile.store');
-// Route::put('user/profile/{email}','User\ProfileController@update')->name('user.profile.update');
-// Route::get('user/profile/{email}/edit', 'User\ProfileController@edit')->name('user.profile.edit');
+Route::get('manager_search_sv', 'ManagerController@manager_search_sv')->name('manager_search_sv');
