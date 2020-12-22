@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'title' => __('Email')])
 
 @section('content')
 <div class="container">

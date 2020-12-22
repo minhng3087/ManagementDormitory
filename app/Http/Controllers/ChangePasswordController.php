@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Session;
 use Hash;
 use Auth;
+use App\Http\Requests\ValidatePassword;
 
 class ChangePasswordController extends Controller
 {
@@ -22,7 +23,7 @@ class ChangePasswordController extends Controller
     public function index() {
         return view('auth.passwords.changepassword');
     }
-    public function store(Request $request)
+    public function store(ValidatePassword $request)
         {
           //Check if the Current Password matches with what is in the database.
           if(!(Hash::check($request->get('current_password'), Auth::user()->password))) {
@@ -32,11 +33,6 @@ class ChangePasswordController extends Controller
           if(strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
             return back()->with('error', 'Mật khẩu phải trùng nhau');
           }
-          //Validate the Password.
-          $request->validate([
-            'current_password' => 'required',
-            'new_password'     => 'required|string|min:6|confirmed'
-          ]);
           // Save the New Password.
           $user = Auth::user();
           $user->password = bcrypt($request->get('new_password'));
