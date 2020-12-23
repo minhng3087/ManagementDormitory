@@ -40,23 +40,27 @@ class StudentController extends Controller
         $room = DB::table('rooms')->where('id', $id)->first();
         $area_id = $room->area_id;
         $area_cost = DB::table('areas')->where('id',$area_id)->value('area_cost');
-        $mssv = $student_info->mssv;
-        $std_gender_id = $student_info->gt_id;
+        $mssv = '';
+        !empty($student_info->mssv) ? $mssv = $student_info->mssv : '';
+        $std_gender_id = '';
+        !empty($student_info->gt_id) ? $std_gender_id = $student_info->gt_id : '';
         if ($std_gender_id == 1) {
             $std_gender = 'nam';
-        } else {
+        } elseif ($std_gender_id == 0) {
             $std_gender = 'nu';
+        } else {
+            $std_gender = '';
         }
         $current_numbers = $room->current_numbers;
         $max_numbers = $room->max_numbers;
         $gender = $room->gender;
         $count = DB::table('room_registrations')->where([
             ['mssv',$mssv],
-            ['status','!=','cancelled']
+            ['status','!=','Hủy']
         ])->count();
         $count1 = DB::table('room_registrations')->where([
             ['mssv',$mssv],
-            ['status','=','cancelled']
+            ['status','=','Hủy']
         ])->count();
         if($std_gender=="" || $mssv == ""){
             return redirect()->back()->with(['flag'=>'danger','message'=>'Vui lòng cập nhật thông tin cá nhân  ']);
@@ -74,7 +78,7 @@ class StudentController extends Controller
             else{
                 if($count1==0){
                     $created_at = Carbon::today()->toDateString();
-                    DB::table('room_registrations')->insert(['room_id'=>$id,'mssv'=>$mssv,'name'=>Auth::user()->name, 'status'=>'registered','cost'=>$area_cost*(13-date('m')), 'created_at'=>$created_at]);
+                    DB::table('room_registrations')->insert(['room_id'=>$id,'mssv'=>$mssv,'name'=>Auth::user()->name, 'status'=>'Đang chờ','cost'=>$area_cost*(13-date('m')), 'created_at'=>$created_at]);
                     $current_numbers=$current_numbers + 1;
                     DB::table('rooms')->where('id',$id)->update(['current_numbers'=>$current_numbers]);
                     return redirect('student_xemdk');
@@ -82,7 +86,7 @@ class StudentController extends Controller
                 else{
                     DB::table('room_registrations')->where([
                         ['mssv',$mssv]
-                    ])->update(['status'=>'registered']);
+                    ])->update(['status'=>'Đang chờ']);
                     $current_numbers = $current_numbers + 1;
                     DB::table('rooms')->where('id',$id)->update(['current_numbers'=>$current_numbers]);
                     return redirect('student_xemdk');
@@ -104,69 +108,25 @@ class StudentController extends Controller
         return view('students.view_managers');
     }
     
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function get_student_huydk($mssv)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $updated_at = Carbon::today()->toDateString();
+        $room_id = RoomRegistration::where([
+            ['mssv',$mssv],
+            ['status', 'Đang chờ']
+        ])->value('room_id');
+        $status = RoomRegistration::where([
+            ['mssv',$mssv]
+        ])->value('status');
+        $current_numbers = Room::where('id',$room_id)->value('current_numbers');
+        $current_numbers = $current_numbers - 1;
+        if ($status == 'Đang chờ') {
+            RoomRegistration::where([ ['mssv',$mssv] ])->update(['status'=>"Hủy"]);
+            Room::where('id',$room_id)->update(['current_numbers'=>$current_numbers]);
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
+        
     }
 }

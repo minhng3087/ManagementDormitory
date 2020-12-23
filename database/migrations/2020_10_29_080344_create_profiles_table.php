@@ -17,12 +17,12 @@ class CreateProfilesTable extends Migration
             $table->bigIncrements('id');
             $table->string('email');
             $table->string('name');
-            $table->integer('mssv')->unique();
+            $table->integer('mssv')->nullable()->unique();
             $table->string('image')->nullable();
             $table->string('qq');
             $table->integer('sdt');
             $table->bigInteger('vien_id')->unsigned();
-            $table->bigInteger('gt_id')->unsigned();
+            $table->bigInteger('gt_id')->nullable()->unsigned();
             $table->bigInteger('khoa_id')->unsigned();
             $table->timestamps();
         });

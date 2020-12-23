@@ -33,7 +33,7 @@ class ManagerController extends Controller
         $ttphong = Room::all();
         $list = RoomRegistration::where([
             // [date('Y',$year->created_at),date('Y')],
-            ['status','registered']
+            ['status','Đang chờ']
         ])->get();
         return view('managers.manager_duyetdk',['list'=>$list,'ttphong'=>$ttphong]);
     }
@@ -57,20 +57,21 @@ class ManagerController extends Controller
     public function get_manager_duyetdk($mssv) 
     {
         $updated_at = Carbon::today()->toDateString();
-        RoomRegistration::where('mssv', $mssv)->update(['status'=>'success', 'updated_at'=>$updated_at]);
+        RoomRegistration::where('mssv', $mssv)->update(['status'=>'Thành công', 'updated_at'=>$updated_at]);
         return redirect()->back();
     }
     public function get_manager_huydk($mssv)
     {
         $updated_at = Carbon::today()->toDateString();
         $room_id = RoomRegistration::where([
-            ['mssv',$mssv]
+            ['mssv',$mssv],
+            ['status', '!=', 'Thành công']
         ])->value('room_id');
         $current_numbers = Room::where('id',$room_id)->value('current_numbers');
         $current_numbers = $current_numbers - 1;
         RoomRegistration::where([
         ['mssv',$mssv]
-        ])->update(['status'=>"cancelled",'updated_at'=>$updated_at]);
+        ])->update(['status'=>"Hủy",'updated_at'=>$updated_at]);
         Room::where('id',$room_id)->update(['current_numbers'=>$current_numbers]);
         return redirect()->back();
     }
@@ -83,7 +84,7 @@ class ManagerController extends Controller
     public function manager_ttphong($id) {
         $list = RoomRegistration::where([
             ['room_id', $id],
-            ['status', '!=', 'cancelled']
+            ['status', '!=', 'Hủy']
         ])->get();
         return view('managers.manager_ttphong', ['list' => $list]);
     }
