@@ -1,19 +1,14 @@
 @extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
 
 @section('content')
-  <!-- <div class="content">
+<div class="content">
     <div class="container">
-      <div class="calendar-env">
-		
-			<div class="calendar-body">
-		
-				<div id="calendar"></div>
-		
-		
-			</div>
+      @if(Auth::user()->hasRole('admin'))
+      <h3 class="text-center">Bạn đang đăng nhập với tư cách admin</h3>
+      @else
+      <h3 class="text-center">Bạn đang đăng nhập với tư cách user</h3>
     </div>
+    @endif
   </div>
-  <script src="material/js/fullcalendar/fullcalendar.min.js"></script>
-	<script src="material/js/neon-calendar.js"></script> -->
 @endsection
 

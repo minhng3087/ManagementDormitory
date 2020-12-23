@@ -25,7 +25,11 @@ class StudentController extends Controller
     public function index()
     {
         $areas = DB::select('select * from areas');
-        return view('students.area_info', ['areas' => $areas]);
+        $ttsv = Profile::where('email', Auth::user()->email)->first();
+        return view('students.area_info', [
+            'areas' => $areas,
+            'ttsv' => $ttsv
+        ]);
     }
 
     public function viewRoom($id)
