@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    @if ($ttsv === null)
+    @if (Session::get('ttsv') === null)
             <script>window.location = "/user/profile/create";</script>
-    @else
+    @endif
    <div class="content">
         <div class="container">
             @if(isset($room))
@@ -72,5 +72,4 @@
     </div>
 
    </div> 
-   @endif
 @endsection

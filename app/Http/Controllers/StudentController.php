@@ -22,13 +22,13 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $areas = DB::select('select * from areas');
         $ttsv = Profile::where('email', Auth::user()->email)->first();
+        $request->session()->put('ttsv', $ttsv);
         return view('students.area_info', [
             'areas' => $areas,
-            'ttsv' => $ttsv
         ]);
     }
 
