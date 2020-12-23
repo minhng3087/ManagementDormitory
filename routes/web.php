@@ -50,7 +50,7 @@ Route::get('room_info/{id}', 'StudentController@viewRoom')->name('room_info');
 Route::get('regist_room/{id}', 'StudentController@registRoom')->name('regist_room');
 Route::get('student_xemdk', 'StudentController@student_xemdk')->name('student_xemdk');
 Route::get('view_managers', 'StudentController@view_managers')->name('view_managers');
-
+Route::get('get_student_huydk/{mssv}','StudentController@get_student_huydk')->name('get_student_huydk');
 
 #----------------------- Manager -------------------------------------
 Route::get('manager_duyetdk','ManagerController@index')->name('manager_duyetdk');
