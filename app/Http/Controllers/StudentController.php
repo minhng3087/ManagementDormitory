@@ -50,7 +50,7 @@ class StudentController extends Controller
         !empty($student_info->gt_id) ? $std_gender_id = $student_info->gt_id : '';
         if ($std_gender_id == 1) {
             $std_gender = 'nam';
-        } elseif ($std_gender_id == 0) {
+        } elseif ($std_gender_id == 2) {
             $std_gender = 'nu';
         } else {
             $std_gender = '';
