@@ -8,7 +8,6 @@
     <span class="navbar-toggler-icon icon-bar"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end">
-      @if(Auth::user()->hasRole('admin'))
       <form class="navbar-form" method="GET" action="{{ route('manager_search_sv') }}">
         <div class="input-group no-border">
           <input type="text" name="search-sv" value="" class="form-control" placeholder="Search...">
@@ -18,7 +17,6 @@
           </button>
         </div>
       </form>
-      @endif
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

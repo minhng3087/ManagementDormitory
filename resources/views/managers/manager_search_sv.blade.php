@@ -2,6 +2,9 @@
 @section('content')
     <div class="content">
         <div class="container">
+            <div class="search-content">
+                Kết quả tìm kiếm cho <span style="color: red">{{ $search_content }}</span> 
+            </div>
             <table class="table table-bordered table-striped datatable" id="table_export">
                 <tr>
                     <th>Mssv</th>

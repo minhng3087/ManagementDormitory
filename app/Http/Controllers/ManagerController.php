@@ -99,7 +99,7 @@ class ManagerController extends Controller
         ])->update(['current_numbers' => $current_numbers]);
         RoomRegistration::where([
            ['mssv',$mssv] 
-        ])->update(['status'=>'cancelled']);
+        ])->update(['status'=>'Hủy']);
         return redirect()->back();
     }
     // public function manager_search () {
@@ -116,7 +116,7 @@ class ManagerController extends Controller
         ->orWhere('name', 'LIKE','%'.$search_content."%")
         ->orWhere('qq', 'LIKE','%'.$search_content."%")
         ->orWhere('email', 'LIKE','%'.$search_content."%")->paginate(7);
-        return view('managers.manager_search_sv', compact('sv_info','gts'));
+        return view('managers.manager_search_sv', compact('sv_info','gts'), ['search_content' => $search_content]);
         
     }
 }

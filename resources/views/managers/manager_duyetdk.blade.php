@@ -34,7 +34,7 @@
                                     B2-{{$t->room_number}}
                                 @else
                                     B3-{{$t->room_number}}
-                                @endif}
+                                @endif
                             @endif
                         @endforeach
                     </td>
