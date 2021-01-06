@@ -14,7 +14,7 @@
                         <div class="col-md-6">
                             <!-- Material input -->
                             <div class="md-form form-group">
-                            <input type="number" class="form-control  @error('sdt') is-invalid @enderror" id="sdt" name="sdt" value={{ $profile->sdt }}>
+                            <input type="text" class="form-control  @error('sdt') is-invalid @enderror" id="sdt" name="sdt" value={{ $profile->sdt }}>
                             @error('sdt')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -29,7 +29,7 @@
                         <div class="col-md-6">
                             <!-- Material input -->
                             <div class="md-form form-group">
-                            <input type="number" class="form-control @error('mssv') is-invalid @enderror" id="mssv" name="mssv" value="{{$profile->mssv}}">
+                            <input type="text" class="form-control @error('mssv') is-invalid @enderror" id="mssv" name="mssv" value="{{$profile->mssv}}">
                             @error('mssv')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

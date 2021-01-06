@@ -56,13 +56,13 @@ class ManagerController extends Controller
     // Duyệt đăng ký
     public function get_manager_duyetdk($mssv) 
     {
-        $updated_at = Carbon::today()->toDateString();
+        $updated_at = Carbon::now('Asia/Ho_Chi_Minh');
         RoomRegistration::where('mssv', $mssv)->update(['status'=>'Thành công', 'updated_at'=>$updated_at]);
         return redirect()->back();
     }
     public function get_manager_huydk($mssv)
     {
-        $updated_at = Carbon::today()->toDateString();
+        $updated_at = Carbon::now('Asia/Ho_Chi_Minh');
         $room_id = RoomRegistration::where([
             ['mssv',$mssv],
             ['status', '!=', 'Thành công']
@@ -86,7 +86,22 @@ class ManagerController extends Controller
             ['room_id', $id],
             ['status', '!=', 'Hủy']
         ])->get();
-        return view('managers.manager_ttphong', ['list' => $list]);
+        $room_id = DB::table('room_registrations')
+                 ->select('room_id')
+                 ->where([
+                    ['room_id', $id],
+                    ['status', '!=', 'Hủy']
+                 ])
+                 ->groupBy('room_id')->get();
+        // $room_id = RoomRegistration::where([
+        //     ['room_id', $id],
+        //     ['status', '!=', 'Hủy']
+        // ])->get()->groupBy('room_id');
+        
+        return view('managers.manager_ttphong', [
+            'list' => $list,
+            'room_id' => $room_id
+        ]);
     }
     public function manager_delete_sv($mssv) {
         $room_id = RoomRegistration::where([
@@ -117,6 +132,20 @@ class ManagerController extends Controller
         ->orWhere('qq', 'LIKE','%'.$search_content."%")
         ->orWhere('email', 'LIKE','%'.$search_content."%")->paginate(7);
         return view('managers.manager_search_sv', compact('sv_info','gts'), ['search_content' => $search_content]);
+    }
+
+    public function manager_search_day(Request $request) {
+        $start = $request->input('start');
+        $end = $request->input('end');
+        $room_id = $request->input('room_id');
+        $list = RoomRegistration::whereDate('created_at', '>=', $start)
+        ->whereDate('created_at', '<=', $end)->where('room_id', '=', $room_id)->get();
+        return view('managers.manager_search_day', [
+            'list' => $list,
+            'start' => $start,
+            'end' => $end
+        ]);
+        
         
     }
 }

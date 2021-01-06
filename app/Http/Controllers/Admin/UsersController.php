@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
 use Illuminate\Support\Facades\DB;
 use App\Models\RoomRegistration;
+use App\Models\Vien;
+use App\Models\Khoa;
+use App\Models\Gt;
 
 
 class UsersController extends Controller
@@ -29,11 +32,16 @@ class UsersController extends Controller
             return back();
         }
         $profiles = Profile::all();
-        $users = User::all();
+        $viens = Vien::all();
+        $khoas = Khoa::all();
+        $gts = Gt::all();
+
         return view('pages.admin.index')->with([
-            'users' => $users,
-            'profiles' => $profiles
-        ]);
+            'profiles' => $profiles,
+            'viens' => $viens,
+            'khoas' => $khoas,
+            'gts' => $gts,
+        ])->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -64,12 +72,12 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($mssv)
+    public function show($id)
     {
         $vien = DB::table('profiles')->join('viens', 'viens.id', '=', 'profiles.vien_id');
         $khoa = DB::table('profiles')->join('khoas', 'khoas.id', '=', 'profiles.khoa_id');
         $gt = DB::table('profiles')->join('gts', 'gts.id', '=', 'profiles.gt_id');
-        $ttsv = Profile::where('mssv', $mssv)->first();
+        $ttsv = Profile::where('id', $id)->first();
         return view('pages.admin.detail')->with([
             'ttsv' => $ttsv,
             'vien' => $vien->value('viens.name'),
@@ -84,15 +92,20 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
         if (Gate::denies('admin')) {
             return back();
         }
-        $roles = Role::all();
+        $viens = Vien::all();
+        $khoas = Khoa::all();
+        $gts = Gt::all();
+        $profile = Profile::where('id', $id)->first();
         return view('pages.admin.edit')->with([
-            'user' => $user,
-            'roles' => $roles,
+            'profile' => $profile,
+            'viens' => $viens,
+            'khoas' => $khoas,
+            'gts' => $gts
         ]);
         
     }
@@ -104,23 +117,53 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
         if (Gate::denies('admin')) {
             return back();
         }
-        $room_info = RoomRegistration::where('name', $user->name)->first();
-        $ttsv = Profile::where('id', $user->id - 1)->first();
-        $room_info->name = $request->name;
-        $ttsv->name = $request->name;
-        $ttsv->email = $request->email;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $room_info->save();
-        $ttsv->save();
-        $user->save() ?  
-            $request->session()->flash('success', 'User updated successfully') : 
-            $request->session()->flash('error', 'User updated failed');
+        $image_name = $request->hidden_image;
+        $image = $request->file('image');
+        if($image != '')
+        {
+            unlink(public_path('uploads') . '/' . $image_name);
+            $request->validate([
+                'mssv'  =>  'required|numeric|min:8',
+                'sdt' =>  'required|numeric|min:10',
+                'qq' =>  'required|string',
+                'image' =>  'required|image|max:2048',
+                'khoa_id' => 'required',
+                'gt_id' => 'required',
+                'vien_id' => 'required',
+            ]);
+
+            $image_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads'), $image_name);
+        }
+        else
+        {
+            $request->validate([
+                'mssv'  =>  'required|min:8',
+                'sdt' =>  'required|min:10',
+                'qq' =>  'required|string',
+                'khoa_id' => 'required',
+                'gt_id' => 'required',
+                'vien_id' => 'required',
+            ]);
+        }
+
+        $form_data = [
+            'mssv' => $request->mssv,
+            'sdt' => $request->sdt,
+            'khoa_id' => $request->khoa_id,
+            'gt_id' => $request->gt_id,
+            'vien_id' => $request->vien_id,
+            'image' => $image_name,
+            'qq' => $request->qq,
+        ];
+        Profile::whereId($id)->update($form_data) ?  
+            $request->session()->flash('success', 'Cập nhật thành công') : 
+            $request->session()->flash('error', 'Cập nhật thất bại');
         return redirect()->route('admin.users.index');
     }
 
@@ -130,18 +173,18 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, User $user)
+    public function destroy(Request $request, $id)
     {
         if (Gate::denies('admin')) {
             return back();
         }
-        $old_name = $user->name;
-        $ttsv = Profile::where('id', $user->id - 1)->first();
+        $user = User::where('id', $id + 1)->first();
+        $ttsv = Profile::where('id', $id)->first();
         $ttsv->delete();
         $user->roles()->detach();
         $user->delete() ?  
-            $request->session()->flash('success',"Xóa $old_name thành công") : 
-            $request->session()->flash('error', "Xóa $old_name thất bại");
+            $request->session()->flash('success',"Xóa thành công") : 
+            $request->session()->flash('error', "Xóa thất bại");
 
         return redirect()->route('admin.users.index');
     }

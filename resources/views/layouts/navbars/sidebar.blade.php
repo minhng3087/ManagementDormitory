@@ -10,7 +10,7 @@
   <div class="sidebar-wrapper">
     <ul class="nav">
       <li class="nav-item">
-        <a class="nav-link" href={{ route('dashboard') }}>
+        <a class="nav-link" href="{{ route('dashboard') }}">
           <i class="material-icons">dashboard</i>
             <p>{{ __('Dashboard') }}</p>
         </a>
@@ -27,15 +27,9 @@
           <div class="collapse show" id="laravelExample">
             <ul class="nav">
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.showinfo') }}">
-                  <span class="sidebar-mini"> UP </span>
-                  <span class="sidebar-normal">{{ __('Quản lý thông tin') }} </span>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.users.index') }}">
                   <span class="sidebar-mini"> UM </span>
-                  <span class="sidebar-normal"> {{ __('Quản lý tài khoản ') }} </span>
+                  <span class="sidebar-normal"> {{ __('Quản lý thông tin ') }} </span>
                 </a>
               </li>
             </ul>
@@ -56,19 +50,19 @@
 
       @else
         <li class="nav-item">
-          <a class="nav-link" href={{ route('user.profile.index') }}>
+          <a class="nav-link" href="{{ route('user.profile.index') }}">
             <i class="material-icons">perm_identity</i>
               <p>{{ __('Thông tin cá nhân') }}</p>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href={{ route('area_info') }}>
+          <a class="nav-link" href="{{ route('area_info') }}">
             <i class="material-icons">perm_identity</i>
               <p>{{ __('Đăng ký phòng') }}</p>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href={{ route('student_xemdk') }}>
+          <a class="nav-link" href="{{ route('student_xemdk') }}">
             <i class="material-icons">perm_identity</i>
               <p>{{ __('Lịch sử đăng ký') }}</p>
           </a>

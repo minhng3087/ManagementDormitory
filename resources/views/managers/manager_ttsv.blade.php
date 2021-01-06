@@ -48,7 +48,7 @@
                         <h6 class="mb-0">{{ __('Số điện thoại')}}</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        {{0 . $ttsv->sdt}}
+                        {{$ttsv->sdt}}
                     </div>
                     </div>
                     <hr>

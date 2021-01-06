@@ -18,6 +18,7 @@
     <link href="{{ asset('material') }}/demo/demo.css" rel="stylesheet" />
     <link href="{{ asset('material') }}/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('material') }}/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css">
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
@@ -73,6 +74,7 @@
         <script src="{{ asset('material') }}/demo/demo.js"></script>
         <script src="{{ asset('material') }}/js/settings.js"></script>
         <script src="{{ asset('material') }}/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
         @stack('js')
     </body>
 </html>

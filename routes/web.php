@@ -15,34 +15,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
 
 Auth::routes();
 // Change password
 Route::get('/changepassword', 'ChangePasswordController@index')->name('changepassword');
 Route::post('/changepassword', 'ChangePasswordController@store')->name('changepassword');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 
+Route::namespace('User')->prefix('user')->name('user.')->group(function() {
+    Route::resource('/profile', 'ProfileController');
+});
 // Admin
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
-    Route::get('/info-users','ShowInfoController@showinfo')->name('showinfo');
     Route::resource('/users', 'UsersController');
-    
+    Route::resource('/rooms', 'RoomController');
 });
 
 
 // User
-
-Route::namespace('User')->prefix('user')->name('user.')->group(function() {
-    Route::resource('/profile', 'ProfileController');
-
-
-});
 
 #---------------------- Student --------------------------
 Route::get('area_info', 'StudentController@index')->name('area_info');
@@ -63,3 +55,4 @@ Route::get('manager_qlphong', 'ManagerController@manager_qlphong')->name('manage
 Route::get('manager_ttphong/{id}', 'ManagerController@manager_ttphong')->name('manager_ttphong');
 Route::get('manager_delete_sv/{mssv}', 'ManagerController@manager_delete_sv')->name('manager_delete_sv');
 Route::get('manager_search_sv', 'ManagerController@manager_search_sv')->name('manager_search_sv');
+Route::get('manager_search_day', 'ManagerController@manager_search_day')->name('manager_search_day');

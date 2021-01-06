@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\RoomRegistration;
+use App\User;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +27,12 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     { 
-        return view('dashboard');
+        $room_register = RoomRegistration::get();
+        $room_register = DB::table('room_registrations')
+            ->join('rooms', 'room_registrations.room_id', '=', 'rooms.id')
+            ->join('areas', 'rooms.area_id', '=', 'areas.id')
+            ->select('room_registrations.*', 'rooms.room_number', 'areas.area_name')
+            ->get();
+        return view('dashboard', compact('room_register'));
     }
 }

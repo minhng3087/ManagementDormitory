@@ -81,7 +81,7 @@ class StudentController extends Controller
             }
             else{
                 if($count1==0){
-                    $created_at = Carbon::today()->toDateString();
+                    $created_at = Carbon::now('Asia/Ho_Chi_Minh');
                     DB::table('room_registrations')->insert(['room_id'=>$id,'mssv'=>$mssv,'name'=>Auth::user()->name, 'status'=>'Đang chờ','cost'=>$area_cost*(13-date('m')), 'created_at'=>$created_at]);
                     $current_numbers=$current_numbers + 1;
                     DB::table('rooms')->where('id',$id)->update(['current_numbers'=>$current_numbers]);
@@ -114,7 +114,7 @@ class StudentController extends Controller
     
     public function get_student_huydk($mssv)
     {
-        $updated_at = Carbon::today()->toDateString();
+        $updated_at = Carbon::now('Asia/Ho_Chi_Minh');
         $room_id = RoomRegistration::where([
             ['mssv',$mssv],
             ['status', 'Đang chờ']

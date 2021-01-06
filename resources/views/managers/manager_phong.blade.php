@@ -8,17 +8,26 @@
                     <i class="fa fa-arrow-circle-o-right"></i>
                         Danh sách phòng
                 </h3>
+                <a href="{{route('admin.rooms.create')}}"><button type="button" class="btn btn-primary">Thêm phòng</button></a>
                 <table class="table table-bordered table-striped datatable" id="table_export">
                     <tr>
                         <th>Số phòng</th>
+                        <th>Khu</th>
                         <th>Số người hiện tại</th>
                         <th>Số người tối đa</th>
                         <th>Giới tính</th>
                         <th>Xem</th>
+                        <th>Tình trạng</th>
                     </tr>
                     @foreach($ttphong as $p)
                     <tr>
                         <td>{{$p->room_number}}</td>
+                        <td>
+                            @if($p->area_id === 1) B1
+                            @elseif ($p->area_id === 2) B2
+                            @elseif ($p->area_id === 3) B3
+                            @endif
+                        </td>
                         <td>{{$p->current_numbers}}</td>
                         <td>{{$p->max_numbers}}</td>
                         <td>@if($p->gender=="nam")
@@ -26,7 +35,17 @@
                             @else {{"Nữ"}}
                             @endif
                         </td>
-                        <td><a href="{{route('manager_ttphong',$p->id)}}"><button type="button" class="btn btn-primary">Xem thông tin</button></a></td>
+                        <td>
+                            <a href="{{route('manager_ttphong',$p->id)}}"><button type="button" class="btn btn-primary">Xem thông tin</button></a>
+                            <a href="{{route('admin.rooms.edit',$p->id)}}"><button type="button" class="btn btn-primary">Sửa</button></a>
+                        </td>
+                        <td>
+                            @if($p->current_numbers === $p->max_numbers)
+                                <p>Phòng đầy</p>
+                            @else 
+                                <p>Còn trống {{$p->max_numbers - $p->current_numbers}} chỗ</p>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </table>
