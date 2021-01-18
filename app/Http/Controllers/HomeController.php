@@ -35,4 +35,13 @@ class HomeController extends Controller
             ->get();
         return view('dashboard', compact('room_register'));
     }
+
+    public function saveToken(Request $request)
+    {
+        auth()->user()->where('id', $request->id)->update(['device_token'=>$request->token]);
+
+        return response()->json(['token saved successfully.']);
+    }
+
+    
 }

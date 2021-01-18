@@ -19,6 +19,8 @@
     <link href="{{ asset('material') }}/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('material') }}/css/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css">
+    <script src='https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js'></script>
+    <script src='https://www.gstatic.com/firebasejs/7.23.0/firebase-messaging.js'></script>
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()

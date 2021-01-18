@@ -47,6 +47,12 @@
               <p>{{ __('Quản lý phòng ở') }}</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('manager_sendnotify') }}">
+            <i class="material-icons">perm_identity</i>
+              <p>{{ __('Đăng thông báo') }}</p>
+          </a>
+        </li>
 
       @else
         <li class="nav-item">

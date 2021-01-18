@@ -117,10 +117,7 @@ class ManagerController extends Controller
         ])->update(['status'=>'Hủy']);
         return redirect()->back();
     }
-    // public function manager_search () {
-    //     $sv_info = DB::table('profiles')->paginate(7);
-    //     return view('managers.manager_search', ['sv_info' => $sv_info]);
-    // }
+   
     public function manager_search_sv(Request $request) {
         $gts = Gt::all();
         $request->validate([
@@ -145,7 +142,47 @@ class ManagerController extends Controller
             'start' => $start,
             'end' => $end
         ]);
+    }
+
+    public function indexSendNotify() {
+        return view('managers.sendNotify');
+    }
+
+    public function sendNotification(Request $request)
+    {
+        // dd($request);
+        $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
+        $SERVER_API_KEY = 'AAAAb5Ef6XA:APA91bG1cGEHstoLwouYUuJpgLRVmNBvxvJYEfS2OH5jwuMLP3ATry-2ZcvXP_25fLFVEdiERNx3n6Lba7XsI0PNT5E-pNDb-_HZsR194QGqwGKtD_zPZpIkFLSVZanpBmd2xqYpXANY';
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => $request->title,
+                "body" => $request->body,
+                "click_action" => $request->link
+            ],
+            "time_to_live" => 10
+
+        ];
         
-        
+        $dataString = json_encode($data);
+        // dd($dataString);
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+  
+        $ch = curl_init();
+  
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+              
+        $response = curl_exec($ch);
+        return redirect()->back()->with('message', 'Notification sent!'); 
+
     }
 }

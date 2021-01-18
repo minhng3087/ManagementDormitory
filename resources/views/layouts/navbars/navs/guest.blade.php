@@ -14,12 +14,12 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a href="{{route('register') }}" class="nav-link">
-            <i class="material-icons">person_add</i> {{ __('Register') }}
+            <i class="material-icons">person_add</i> {{ __('Đăng ký') }}
           </a>
         </li>
         <li class="nav-item">
           <a href="{{route('login')}}" class="nav-link">
-            <i class="material-icons">fingerprint</i> {{ __('Login') }}
+            <i class="material-icons">fingerprint</i> {{ __('Đăng nhập') }}
           </a>
         </li>
       </ul>

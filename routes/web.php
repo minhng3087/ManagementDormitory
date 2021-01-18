@@ -22,11 +22,14 @@ Route::get('/changepassword', 'ChangePasswordController@index')->name('changepas
 Route::post('/changepassword', 'ChangePasswordController@store')->name('changepassword');
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+Route::post('/save-token','HomeController@saveToken')->name('save-token');
 
 
 Route::namespace('User')->prefix('user')->name('user.')->group(function() {
     Route::resource('/profile', 'ProfileController');
 });
+
+
 // Admin
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
     Route::resource('/users', 'UsersController');
@@ -49,6 +52,8 @@ Route::get('manager_duyetdk','ManagerController@index')->name('manager_duyetdk')
 Route::get('get_manager_duyetdk/{mssv}','ManagerController@get_manager_duyetdk')->name('get_manager_duyetdk');
 Route::get('get_manager_huydk/{mssv}','ManagerController@get_manager_huydk')->name('get_manager_huydk');
 Route::get('get_manager_ttsv/{mssv}','ManagerController@get_manager_ttsv')->name('get_manager_ttsv');
+Route::get('manager_sendnotify', 'ManagerController@indexSendNotify')->name('manager_sendnotify');
+Route::post('/send-notification', 'ManagerController@sendNotification')->name('send.notification');
 
 #----------------------- Xem thông tin phòng -------------------------
 Route::get('manager_qlphong', 'ManagerController@manager_qlphong')->name('manager_qlphong');
